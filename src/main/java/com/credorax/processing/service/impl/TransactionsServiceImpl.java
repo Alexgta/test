@@ -20,11 +20,24 @@ public class TransactionsServiceImpl implements TransactionsService {
         TransactionsEntity transactionsEntity = new TransactionsEntity();
         BeanUtils.copyProperties(transaction, transactionsEntity);
         TransactionsEntity savedTransactionsEntity =  transactionsRepository.save(transactionsEntity);
-
         TransactionsDto returnValue = new TransactionsDto();
         BeanUtils.copyProperties(savedTransactionsEntity, returnValue);
 
+        return returnValue;
+    }
+
+    @Override
+    public TransactionsDto getTransactionByIvoiceNum(int invoiceNum) {
+
+        TransactionsDto returnValue = new TransactionsDto();
+        TransactionsEntity transactionsEntity = transactionsRepository.findByInvoice(invoiceNum);
+        if (transactionsEntity == null) {
+            // TODO: add    throw new TransactionNotFoundException(invoiceNum);
+        }
+        BeanUtils.copyProperties(transactionsEntity, returnValue);
 
         return returnValue;
     }
+
+
 }

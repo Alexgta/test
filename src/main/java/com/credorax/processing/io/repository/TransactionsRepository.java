@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransactionsRepository  extends CrudRepository<TransactionsEntity, Integer>  {
+    TransactionsEntity findByInvoice(int invoiceNum);
 }

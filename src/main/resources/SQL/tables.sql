@@ -4,10 +4,13 @@ CREATE TABLE IF NOT EXISTS cardholder (
     email       CHARACTER VARYING(50),
     c_name_encr CHARACTER VARYING(100),
     email_encr  CHARACTER VARYING(100),
-    CONSTRAINT cardholder_pk PRIMARY KEY (id)
+    CONSTRAINT cardholder_pk PRIMARY KEY (id),
+    CONSTRAINT cardholder_email_unq UNIQUE (email),
+    CONSTRAINT cardholder_email_encr_unq UNIQUE (email_encr)
 );
 INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jhon Smith', 'email@net.com', 'Jhon Smith', 'email@net.com');
 INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jack Lee',  'jack@net.com', 'Jack Lee', 'jack@net.com');
+
 
 
 CREATE TABLE IF NOT EXISTS card (

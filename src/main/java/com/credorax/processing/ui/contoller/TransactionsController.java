@@ -16,9 +16,14 @@ public class TransactionsController {
     @Autowired
     TransactionsService transactionsService;
 
-    @GetMapping
-    public String getTransactions() {
-        return "getTransactions called";
+    @GetMapping(path= "/{invoice}")      // http://localhost:8080/transc/101
+    public TransactionsRest getTransactions(@PathVariable int invoice) {
+
+        TransactionsRest returnValue = new TransactionsRest();
+        TransactionsDto transactionsDto = transactionsService.getTransactionByIvoiceNum(invoice);
+        BeanUtils.copyProperties(transactionsDto, returnValue);
+
+        return returnValue;
     }
 
     @PostMapping
