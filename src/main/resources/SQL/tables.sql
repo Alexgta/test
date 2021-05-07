@@ -6,9 +6,8 @@ CREATE TABLE IF NOT EXISTS cardholder (
     email_encr  CHARACTER VARYING(100),
     CONSTRAINT cardholder_pk PRIMARY KEY (id)
 );
-
-INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jhon', 'Smith', 'email@net.com', 'email@net.com');
-INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jack', 'Lee', 'jack@net.com', 'jack@net.com');
+INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jhon Smith', 'email@net.com', 'Jhon Smith', 'email@net.com');
+INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jack Lee',  'jack@net.com', 'Jack Lee', 'jack@net.com');
 
 
 CREATE TABLE IF NOT EXISTS card (
