@@ -26,12 +26,6 @@ public class CardController {
         ModelMapper modelMapper = new ModelMapper();
         CardRest returnValue = modelMapper.map(cardDTO, CardRest.class);
 
-        // TODO: ##01: check if I can avoid next 2 lines:
-        //CardholderRest cardholderRest = modelMapper.map(cardDTO.getCardholder(), CardholderRest.class);
-        //returnValue.setCardholder(cardholderRest);
-
-        String aa = "Hi there";
-
         return returnValue;
     }
 

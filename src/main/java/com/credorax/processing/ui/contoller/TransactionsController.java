@@ -24,14 +24,7 @@ public class TransactionsController {
         TransactionsDTO transactionsDto = transactionsService.getTransactionByIvoiceNum(invoice);
         ModelMapper modelMapper = new ModelMapper();
         TransactionsRest returnValue = modelMapper.map(transactionsDto, TransactionsRest.class);
-
-        // TODO ##02. Check if I can avoid next code:
-        CardRest cardRest = modelMapper.map(transactionsDto.getCard(), CardRest.class);
-        CardholderRest cardholderRest = modelMapper.map(transactionsDto.getCard().getCardholder(), CardholderRest.class);
-        returnValue.setCard(cardRest);
-        returnValue.setCardholder(cardholderRest);
-
-        String aa = "Hello there";
+        returnValue.setCardholder(modelMapper.map(transactionsDto.getCard().getCardholder(), CardholderRest.class));
 
         return returnValue;
     }
