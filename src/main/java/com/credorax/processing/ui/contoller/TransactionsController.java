@@ -4,7 +4,6 @@ package com.credorax.processing.ui.contoller;
 import com.credorax.processing.service.TransactionsService;
 import com.credorax.processing.shared.dto.TransactionsDTO;
 import com.credorax.processing.ui.model.request.TransactionsRequestModel;
-import com.credorax.processing.ui.model.response.CardRest;
 import com.credorax.processing.ui.model.response.CardholderRest;
 import com.credorax.processing.ui.model.response.TransactionsRest;
 import org.modelmapper.ModelMapper;
@@ -35,9 +34,8 @@ public class TransactionsController {
         ModelMapper modelMapper = new ModelMapper();
         TransactionsDTO transactionsDto = modelMapper.map(transactionsDetails, TransactionsDTO.class);
         TransactionsDTO newTransaction = transactionsService.createTransactions(transactionsDto);
-        //TransactionsRest returnValue = modelMapper.map(newTransaction, TransactionsRest.class);
-
-        return modelMapper.map(newTransaction, TransactionsRest.class);
+        TransactionsRest returnValue = modelMapper.map(newTransaction, TransactionsRest.class);
+        return returnValue;
     }
 
     @PutMapping

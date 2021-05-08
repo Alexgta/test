@@ -11,6 +11,7 @@ public class TransactionsDTO implements Serializable {
     private String currency;
     //private int cardId;
     private CardDTO card;
+    private CardholderDTO cardholder;
 
     public int getInvoice() {
         return invoice;
@@ -44,4 +45,11 @@ public class TransactionsDTO implements Serializable {
         this.card = card;
     }
 
+    public CardholderDTO getCardholder() {
+        return cardholder;
+    }
+
+    public void setCardholder(CardholderDTO cardholder) {
+        this.cardholder = cardholder;
+    }
 }

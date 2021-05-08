@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CardRepository extends CrudRepository<CardEntity, Integer> {
     CardEntity findById(int cardId);
+    CardEntity findByPanAndExpiryDate(String pan, String expiryDate);
 }

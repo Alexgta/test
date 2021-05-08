@@ -1,3 +1,13 @@
+SELECT * FROM cardholder;
+SELECT * FROM card;
+SELECT * FROM transactions;
+
+DELETE FROM transactions WHERE card_id > 100;
+DELETE FROM card WHERE id > 100;
+
+commit;
+
+
 CREATE TABLE IF NOT EXISTS cardholder (
     id          SERIAL,
     c_name      CHARACTER VARYING(50),
@@ -30,6 +40,7 @@ INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, ca
 INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123456', '0125', '1234567890123456', '0125', '123', '123', 1);
 INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123450', '0220', '1234567890123450', '0220', '123', '123', 2);
 INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123450', '0225', '1234567890123450', '0225', '123', '123', 2);
+INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '4000000000000001', '0326', '4000000000000001', '0225', '123', '123', 2);
 
 
 CREATE TABLE IF NOT EXISTS transactions (

@@ -3,9 +3,7 @@ package com.credorax.processing.ui.contoller;
 
 import com.credorax.processing.service.CardholderService;
 import com.credorax.processing.shared.dto.CardholderDTO;
-import com.credorax.processing.shared.dto.TransactionsDTO;
 import com.credorax.processing.ui.model.response.CardholderRest;
-import com.credorax.processing.ui.model.response.TransactionsRest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

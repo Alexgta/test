@@ -14,7 +14,7 @@ public class TransactionsEntity implements Serializable {
     private int amount;             // Optional:  @Column(name="amount" ,nullable=false)
     private String currency;
 
-    @ManyToOne
+    @ManyToOne //(cascade = {CascadeType.ALL})
     @JoinColumn(name="card_id")
     private CardEntity card;
 

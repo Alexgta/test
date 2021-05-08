@@ -10,7 +10,6 @@ public class CardholderEntity implements Serializable {
     private static final long serialVersionUID = 7809200551672852690L;
 
     @Id
-    @GeneratedValue
     private int id;
     private String cName;
     private String email;

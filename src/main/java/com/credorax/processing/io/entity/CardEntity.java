@@ -10,7 +10,6 @@ public class CardEntity implements Serializable {
     private static final long serialVersionUID = 8051324316462829780L;
 
     @Id
-    @GeneratedValue
     private int id;
     private String pan;
     private String expiryDate;
@@ -19,7 +18,7 @@ public class CardEntity implements Serializable {
     private String expiryDateEncr;
     private String cvvEncr;
 
-    @ManyToOne
+    @ManyToOne //(cascade = {CascadeType.ALL})
     @JoinColumn(name="cardholder_id")
     private CardholderEntity cardholder;
 

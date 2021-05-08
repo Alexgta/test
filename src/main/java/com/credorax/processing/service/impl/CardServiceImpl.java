@@ -24,4 +24,14 @@ public class CardServiceImpl implements CardService {
         return returnValue;
 
     }
+
+    @Override
+    public CardDTO getCardByPanAndExpiryDate(String pan, String expiryDate) {
+        CardEntity cardEntity = cardRepository.findByPanAndExpiryDate(pan, expiryDate);
+        ModelMapper modelMapper = new ModelMapper();
+        CardDTO returnValue = modelMapper.map(cardEntity, CardDTO.class);
+        return returnValue;
+    }
+
+
 }

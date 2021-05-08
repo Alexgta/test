@@ -22,4 +22,12 @@ public class CardholderServiceImpl implements CardholderService {
         CardholderDTO returnValue = modelMapper.map(cardholderEntity, CardholderDTO.class);
         return returnValue;
     }
+
+    /*@Override
+    public CardholderDTO getCardholderByEmailAndCName(String email, String cName) {
+        CardholderEntity cardholderEntity = cardholderRepository.findByEmailAndCName(email, cName);
+        ModelMapper modelMapper = new ModelMapper();
+        CardholderDTO returnValue = modelMapper.map(cardholderEntity, CardholderDTO.class);
+        return returnValue;
+    }*/
 }

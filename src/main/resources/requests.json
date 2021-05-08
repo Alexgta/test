@@ -1,7 +1,16 @@
+
 {
-  "invoice": "105",
-  "amount": "1",
+  "invoice": "106",
+  "amount": "2",
   "currency": "RUR",
-  "cardId": "2"
+  "cardholder": {
+      "cName": "Jhon Smith",
+      "email": "email@net.com"
+  },
+  "card": {
+      "pan": "1234567890123456",
+      "expiryDate": "0125",
+      "cvv": "123"
+  }
 }
 
