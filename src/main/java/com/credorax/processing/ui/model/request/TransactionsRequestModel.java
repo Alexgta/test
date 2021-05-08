@@ -1,14 +1,13 @@
-package com.credorax.processing.shared.dto;
+package com.credorax.processing.ui.model.request;
 
-import java.io.Serializable;
+public class TransactionsRequestModel {
 
-public class TransactionsDto implements Serializable {
-
-    private static final long serialVersionUID = 6835192601898364280L;
     private int invoice;
     private int amount;
     private String currency;
-    private int cardId;
+    CardholderRequestModel cardholder;
+    CardRequestModel card;
+
 
     public int getInvoice() {
         return invoice;
@@ -34,11 +33,20 @@ public class TransactionsDto implements Serializable {
         this.currency = currency;
     }
 
-    public int getCardId() {
-        return cardId;
+    public CardholderRequestModel getCardholder() {
+        return cardholder;
     }
 
-    public void setCardId(int cardId) {
-        this.cardId = cardId;
+    public void setCardholder(CardholderRequestModel cardholder) {
+        this.cardholder = cardholder;
     }
+
+    public CardRequestModel getCard() {
+        return card;
+    }
+
+    public void setCard(CardRequestModel card) {
+        this.card = card;
+    }
+
 }

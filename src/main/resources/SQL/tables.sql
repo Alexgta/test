@@ -2,8 +2,8 @@ CREATE TABLE IF NOT EXISTS cardholder (
     id          SERIAL,
     c_name      CHARACTER VARYING(50),
     email       CHARACTER VARYING(50),
-    c_name_encr CHARACTER VARYING(100),
-    email_encr  CHARACTER VARYING(100),
+    c_name_encr CHARACTER VARYING(200),
+    email_encr  CHARACTER VARYING(200),
     CONSTRAINT cardholder_pk PRIMARY KEY (id),
     CONSTRAINT cardholder_email_unq UNIQUE (email),
     CONSTRAINT cardholder_email_encr_unq UNIQUE (email_encr)
@@ -15,20 +15,21 @@ INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jack Lee
 
 CREATE TABLE IF NOT EXISTS card (
     id               SERIAL,
-    pan              CHARACTER VARYING(16),
-    expiry_date      CHARACTER VARYING(4),
-    pan_encr         CHARACTER VARYING(100),
-    expiry_date_encr CHARACTER VARYING(100),
+    pan              CHARACTER(16),
+    expiry_date      CHARACTER(4),
+    cvv              CHARACTER(3),
+    pan_encr         CHARACTER VARYING(200),
+    expiry_date_encr CHARACTER VARYING(200),
+    cvv_encr         CHARACTER(200),
     cardholder_id    int,
     CONSTRAINT card_pk PRIMARY KEY (id)
 );
 ALTER TABLE card ADD CONSTRAINT card_fk_01 FOREIGN KEY (cardholder_id)  REFERENCES cardholder (id);
 
-
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cardholder_id) VALUES( '1234567890123456', '0120', '1234567890123456', '0120', 1);
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cardholder_id) VALUES( '1234567890123456', '0125', '1234567890123456', '0125', 1);
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cardholder_id) VALUES( '1234567890123450', '0220', '1234567890123450', '0220', 2);
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cardholder_id) VALUES( '1234567890123450', '0225', '1234567890123450', '0225', 2);
+INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123456', '0120', '1234567890123456', '0120', '123', '123', 1);
+INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123456', '0125', '1234567890123456', '0125', '123', '123', 1);
+INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123450', '0220', '1234567890123450', '0220', '123', '123', 2);
+INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123450', '0225', '1234567890123450', '0225', '123', '123', 2);
 
 
 CREATE TABLE IF NOT EXISTS transactions (

@@ -1,8 +1,8 @@
 package com.credorax.processing.service;
 
-import com.credorax.processing.shared.dto.TransactionsDto;
+import com.credorax.processing.shared.dto.TransactionsDTO;
 
 public interface TransactionsService {
-    TransactionsDto createTransactions(TransactionsDto transaction);
-    TransactionsDto getTransactionByIvoiceNum(int invoice);
+    TransactionsDTO createTransactions(TransactionsDTO transaction);
+    TransactionsDTO getTransactionByIvoiceNum(int invoice);
 }

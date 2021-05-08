@@ -2,10 +2,12 @@ package com.credorax.processing.ui.contoller;
 
 
 import com.credorax.processing.service.TransactionsService;
-import com.credorax.processing.shared.dto.TransactionsDto;
-import com.credorax.processing.ui.model.request.TransactionsDetailsRequestModel;
+import com.credorax.processing.shared.dto.TransactionsDTO;
+import com.credorax.processing.ui.model.request.TransactionsRequestModel;
+import com.credorax.processing.ui.model.response.CardRest;
+import com.credorax.processing.ui.model.response.CardholderRest;
 import com.credorax.processing.ui.model.response.TransactionsRest;
-import org.springframework.beans.BeanUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,25 +21,30 @@ public class TransactionsController {
     @GetMapping(path= "/{invoice}")      // http://localhost:8080/transc/101
     public TransactionsRest getTransactions(@PathVariable int invoice) {
 
-        TransactionsRest returnValue = new TransactionsRest();
-        TransactionsDto transactionsDto = transactionsService.getTransactionByIvoiceNum(invoice);
-        BeanUtils.copyProperties(transactionsDto, returnValue);
+        TransactionsDTO transactionsDto = transactionsService.getTransactionByIvoiceNum(invoice);
+        ModelMapper modelMapper = new ModelMapper();
+        TransactionsRest returnValue = modelMapper.map(transactionsDto, TransactionsRest.class);
+
+        // TODO ##02. Check if I can avoid next code:
+        CardRest cardRest = modelMapper.map(transactionsDto.getCard(), CardRest.class);
+        CardholderRest cardholderRest = modelMapper.map(transactionsDto.getCard().getCardholder(), CardholderRest.class);
+        returnValue.setCard(cardRest);
+        returnValue.setCardholder(cardholderRest);
+
+        String aa = "Hello there";
 
         return returnValue;
     }
 
     @PostMapping
-    public TransactionsRest createTransactions(@RequestBody TransactionsDetailsRequestModel transactionsDetails) {
-        TransactionsRest returnValue = new TransactionsRest();
+    public TransactionsRest createTransactions(@RequestBody TransactionsRequestModel transactionsDetails) {
 
-        TransactionsDto transactionsDto = new TransactionsDto();
-        BeanUtils.copyProperties(transactionsDetails, transactionsDto);
+        ModelMapper modelMapper = new ModelMapper();
+        TransactionsDTO transactionsDto = modelMapper.map(transactionsDetails, TransactionsDTO.class);
+        TransactionsDTO newTransaction = transactionsService.createTransactions(transactionsDto);
+        //TransactionsRest returnValue = modelMapper.map(newTransaction, TransactionsRest.class);
 
-        TransactionsDto newTransaction = transactionsService.createTransactions(transactionsDto);
-        BeanUtils.copyProperties(newTransaction, returnValue);
-
-
-        return returnValue;
+        return modelMapper.map(newTransaction, TransactionsRest.class);
     }
 
     @PutMapping

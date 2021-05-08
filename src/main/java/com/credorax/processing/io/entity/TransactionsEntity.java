@@ -1,9 +1,6 @@
 package com.credorax.processing.io.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -14,13 +11,12 @@ public class TransactionsEntity implements Serializable {
 
     @Id
     private int invoice;
-
-    private int amount;
-
+    private int amount;             // Optional:  @Column(name="amount" ,nullable=false)
     private String currency;
 
-    @Column(name="card_id") // ,nullable=false
-    private int cardId;
+    @ManyToOne
+    @JoinColumn(name="card_id")
+    private CardEntity card;
 
     public int getInvoice() {
         return invoice;
@@ -46,11 +42,11 @@ public class TransactionsEntity implements Serializable {
         this.currency = currency;
     }
 
-    public int getCardId() {
-        return cardId;
+    public CardEntity getCard() {
+        return card;
     }
 
-    public void setCardId(int cardId) {
-        this.cardId = cardId;
+    public void setCard(CardEntity cardEntity) {
+        this.card = cardEntity;
     }
 }

@@ -5,7 +5,8 @@ public class TransactionsRest {
     private int invoice;
     private int amount;
     private String currency;
-    private int cardId;
+    private CardholderRest cardholder;
+    private CardRest card;
 
     public int getInvoice() {
         return invoice;
@@ -31,11 +32,19 @@ public class TransactionsRest {
         this.currency = currency;
     }
 
-    public int getCardId() {
-        return cardId;
+    public CardholderRest getCardholder() {
+        return cardholder;
     }
 
-    public void setCardId(int cardId) {
-        this.cardId = cardId;
+    public void setCardholder(CardholderRest cardholder) {
+        this.cardholder = cardholder;
+    }
+
+    public CardRest getCard() {
+        return card;
+    }
+
+    public void setCard(CardRest card) {
+        this.card = card;
     }
 }
