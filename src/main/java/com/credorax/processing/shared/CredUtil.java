@@ -1,5 +1,7 @@
 package com.credorax.processing.shared;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -7,11 +9,10 @@ public class CredUtil {
 
     public static void main(String[] args) {
 
-        String str = "0123456";
-        String str2 = str.substring(str.length() - 4);
-
-        System.out.println(str2);
-
+        byte[] encodedBytes = Base64.encodeBase64("Test".getBytes());
+        System.out.println("encodedBytes: " + new String(encodedBytes));
+        byte[] decodedBytes = Base64.decodeBase64(encodedBytes);
+        System.out.println("decodedBytes " + new String(decodedBytes));
 
     }
 
