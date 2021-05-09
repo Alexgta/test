@@ -1,59 +1,70 @@
 SELECT * FROM cardholder;
-SELECT * FROM card;
-SELECT * FROM transactions;
-
 DELETE FROM transactions WHERE card_id > 100;
-DELETE FROM card WHERE id > 100;
-
 commit;
 
 
-CREATE TABLE IF NOT EXISTS cardholder (
-    id          SERIAL,
-    c_name      CHARACTER VARYING(50),
-    email       CHARACTER VARYING(50),
-    c_name_encr CHARACTER VARYING(200),
-    email_encr  CHARACTER VARYING(200),
-    CONSTRAINT cardholder_pk PRIMARY KEY (id),
-    CONSTRAINT cardholder_email_unq UNIQUE (email),
-    CONSTRAINT cardholder_email_encr_unq UNIQUE (email_encr)
+CREATE TABLE IF NOT EXISTS transactions
+(
+    id                  SERIAL,
+    invoice             int,
+    amount              int,
+    currency            CHARACTER(3),
+    email               CHARACTER VARYING(50),
+    name_encr           CHARACTER VARYING(200),
+    pan_encr            CHARACTER(200),
+    expiry_encr    CHARACTER(200),
+    CONSTRAINT transactions_pk PRIMARY KEY (id)
 );
-INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jhon Smith', 'email@net.com', 'Jhon Smith', 'email@net.com');
-INSERT INTO cardholder (c_name, email, c_name_encr, email_encr) VALUES('Jack Lee',  'jack@net.com', 'Jack Lee', 'jack@net.com');
 
+INSERT INTO transactions(invoice, amount, currency, name_encr, email, pan_encr, expiry_encr) VALUES (100, 10, 'USD', 'Jhon Smith', 'email@net.com', '4000000000000001', '0120');
+INSERT INTO transactions(invoice, amount, currency, name_encr, email, pan_encr, expiry_encr) VALUES (101, 20, 'USD', 'Jack Lee',   'jack@net.com' , '4000000000000001', '0120');
+INSERT INTO transactions(invoice, amount, currency, name_encr, email, pan_encr, expiry_encr) VALUES (102, 30, 'USD', 'Mr Foo',     'foo@net.com'  , '4000000000000001', '0120');
+INSERT INTO transactions(invoice, amount, currency, name_encr, email, pan_encr, expiry_encr) VALUES (103, 40, 'USD', 'Ms Smith',   'ms@net.com'   , '4000000000000001', '0120');
+
+
+
+----------- Old solution:
+
+/*CREATE TABLE IF NOT EXISTS transactions (
+    id              SERIAL,
+    invoice         int,
+    amount          int,
+    currency        CHARACTER(3),
+    CONSTRAINT transactions_pk PRIMARY KEY (id)
+);
+INSERT INTO transactions(invoice, amount, currency) VALUES (100, 10, 'USD');
+INSERT INTO transactions(invoice, amount, currency) VALUES (101, 20, 'EUR');
+INSERT INTO transactions(invoice, amount, currency) VALUES (102, 30, 'CAN');
+INSERT INTO transactions(invoice, amount, currency) VALUES (103, 40, 'IRD');
+
+
+CREATE TABLE IF NOT EXISTS cardholder (
+    id               SERIAL,
+    transactions_id  int,
+    name_encr        CHARACTER VARYING(250),
+    email            CHARACTER VARYING(100),
+    CONSTRAINT cardholder_pk PRIMARY KEY (id)
+);
+ALTER TABLE cardholder ADD CONSTRAINT cardholder_fk_01 FOREIGN KEY (transactions_id)  REFERENCES transactions (id);
+
+INSERT INTO cardholder(transactions_id, name_encr, email)  VALUES(1, 'Jhon Smith', 'email@net.com');
+INSERT INTO cardholder(transactions_id, name_encr, email)  VALUES(2, 'Jack Lee',   'jack@net.com' );
+INSERT INTO cardholder(transactions_id, name_encr, email)  VALUES(3, 'Mr Foo',     'foo@net.com'  );
+INSERT INTO cardholder(transactions_id, name_encr, email)  VALUES(4, 'Ms Smith',   'ms@net.com'   );
 
 
 CREATE TABLE IF NOT EXISTS card (
     id               SERIAL,
-    pan              CHARACTER(16),
-    expiry_date      CHARACTER(4),
-    cvv              CHARACTER(3),
-    pan_encr         CHARACTER VARYING(200),
-    expiry_date_encr CHARACTER VARYING(200),
-    cvv_encr         CHARACTER(200),
-    cardholder_id    int,
+    transactions_id  int,
+    pan_encr              CHARACTER(250),
+    expiry_date_encr      CHARACTER(250),
     CONSTRAINT card_pk PRIMARY KEY (id)
 );
-ALTER TABLE card ADD CONSTRAINT card_fk_01 FOREIGN KEY (cardholder_id)  REFERENCES cardholder (id);
+ALTER TABLE card ADD CONSTRAINT card_fk_01 FOREIGN KEY (transactions_id)  REFERENCES transactions (id);
 
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123456', '0120', '1234567890123456', '0120', '123', '123', 1);
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123456', '0125', '1234567890123456', '0125', '123', '123', 1);
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123450', '0220', '1234567890123450', '0220', '123', '123', 2);
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '1234567890123450', '0225', '1234567890123450', '0225', '123', '123', 2);
-INSERT INTO card(pan, expiry_date, pan_encr, expiry_date_encr, cvv, cvv_encr, cardholder_id) VALUES( '4000000000000001', '0326', '4000000000000001', '0225', '123', '123', 2);
+INSERT INTO card(transactions_id, pan_encr, expiry_date_encr) VALUES(1, '4000000000000001', '0120');
+INSERT INTO card(transactions_id, pan_encr, expiry_date_encr) VALUES(2, '4000000000000002', '0125');
+INSERT INTO card(transactions_id, pan_encr, expiry_date_encr) VALUES(3, '4000000000000003', '0220');
+INSERT INTO card(transactions_id, pan_encr, expiry_date_encr) VALUES(4, '4000000000000004', '0225');
 
-
-CREATE TABLE IF NOT EXISTS transactions (
-    invoice         int,
-    amount          int,
-    currency        CHARACTER(3),
-    card_id         int,
-    CONSTRAINT transactions_pk PRIMARY KEY (invoice)
-);
-ALTER TABLE transactions ADD CONSTRAINT transactions_fk_02 FOREIGN KEY (card_id)  REFERENCES card (id);
-
-INSERT INTO transactions VALUES (100, 10, 'USD', 2);
-INSERT INTO transactions VALUES (101, 20, 'EUR', 2);
-INSERT INTO transactions VALUES (102, 30, 'CAN', 4);
-INSERT INTO transactions VALUES (103, 40, 'IRD', 4);
-
+*/

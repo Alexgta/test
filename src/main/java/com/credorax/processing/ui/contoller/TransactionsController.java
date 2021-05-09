@@ -3,9 +3,8 @@ package com.credorax.processing.ui.contoller;
 
 import com.credorax.processing.service.TransactionsService;
 import com.credorax.processing.shared.dto.TransactionsDTO;
-import com.credorax.processing.ui.model.request.TransactionsRequestModel;
-import com.credorax.processing.ui.model.response.CardholderRest;
-import com.credorax.processing.ui.model.response.TransactionsRest;
+import com.credorax.processing.ui.model.request.TransactionsRequest;
+import com.credorax.processing.ui.model.response.TransactionInsertResp;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,24 +17,24 @@ public class TransactionsController {
     TransactionsService transactionsService;
 
     @GetMapping(path= "/{invoice}")      // http://localhost:8080/transc/101
-    public TransactionsRest getTransactions(@PathVariable int invoice) {
+    public TransactionInsertResp getTransactions(@PathVariable int invoice) {
 
-        TransactionsDTO transactionsDto = transactionsService.getTransactionByIvoiceNum(invoice);
+        TransactionsDTO transactionsDto = transactionsService.getTransactionByIvoice(invoice);
         ModelMapper modelMapper = new ModelMapper();
-        TransactionsRest returnValue = modelMapper.map(transactionsDto, TransactionsRest.class);
-        returnValue.setCardholder(modelMapper.map(transactionsDto.getCard().getCardholder(), CardholderRest.class));
+        TransactionInsertResp returnValue = modelMapper.map(transactionsDto, TransactionInsertResp.class);
 
         return returnValue;
     }
 
     @PostMapping
-    public TransactionsRest createTransactions(@RequestBody TransactionsRequestModel transactionsDetails) {
+    public TransactionInsertResp createTransactions(@RequestBody TransactionsRequest transactionsDetails) {
 
         ModelMapper modelMapper = new ModelMapper();
         TransactionsDTO transactionsDto = modelMapper.map(transactionsDetails, TransactionsDTO.class);
         TransactionsDTO newTransaction = transactionsService.createTransactions(transactionsDto);
-        TransactionsRest returnValue = modelMapper.map(newTransaction, TransactionsRest.class);
+        TransactionInsertResp returnValue = modelMapper.map(newTransaction, TransactionInsertResp.class);
         return returnValue;
+        //return modelMapper.map(transactionsDto, TransactionInsertResp.class);
     }
 
     @PutMapping

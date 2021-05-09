@@ -1,9 +1,9 @@
 package com.credorax.processing.ui.model.request;
 
-public class CardRequestModel {
+public class CardRequest {
 
     private String pan;
-    private String expiryDate;
+    private String expiry;
     private String cvv;
 
     public String getPan() {
@@ -14,12 +14,12 @@ public class CardRequestModel {
         this.pan = pan;
     }
 
-    public String getExpiryDate() {
-        return expiryDate;
+    public String getExpiry() {
+        return expiry;
     }
 
-    public void setExpiryDate(String expiryDate) {
-        this.expiryDate = expiryDate;
+    public void setExpiry(String expiry) {
+        this.expiry = expiry;
     }
 
     public String getCvv() {

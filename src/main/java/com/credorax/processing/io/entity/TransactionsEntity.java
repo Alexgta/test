@@ -10,13 +10,16 @@ public class TransactionsEntity implements Serializable {
     private static final long serialVersionUID = 5313493413859894403L;
 
     @Id
+    @GeneratedValue
+    private int id;
     private int invoice;
-    private int amount;             // Optional:  @Column(name="amount" ,nullable=false)
+    private int amount;
     private String currency;
+    private String nameEncr;
+    private String email;
+    private String panEncr;
+    private String expiryEncr;
 
-    @ManyToOne //(cascade = {CascadeType.ALL})
-    @JoinColumn(name="card_id")
-    private CardEntity card;
 
     public int getInvoice() {
         return invoice;
@@ -42,11 +45,44 @@ public class TransactionsEntity implements Serializable {
         this.currency = currency;
     }
 
-    public CardEntity getCard() {
-        return card;
+    public int getId() {
+        return id;
     }
 
-    public void setCard(CardEntity cardEntity) {
-        this.card = cardEntity;
+    public void setId(int id) {
+        this.id = id;
     }
+
+    public String getNameEncr() {
+        return nameEncr;
+    }
+
+    public void setNameEncr(String nameEncr) {
+        this.nameEncr = nameEncr;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPanEncr() {
+        return panEncr;
+    }
+
+    public void setPanEncr(String panEncr) {
+        this.panEncr = panEncr;
+    }
+
+    public String getExpiryEncr() {
+        return expiryEncr;
+    }
+
+    public void setExpiryEncr(String expiryEncr) {
+        this.expiryEncr = expiryEncr;
+    }
+
 }

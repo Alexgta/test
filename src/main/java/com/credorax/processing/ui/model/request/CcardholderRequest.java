@@ -1,16 +1,16 @@
 package com.credorax.processing.ui.model.request;
 
-public class CardholderRequestModel {
+public class CcardholderRequest {
 
-    private String cName;
+    private String name;
     private String email;
 
-    public String getcName() {
-        return cName;
+    public String getName() {
+        return name;
     }
 
-    public void setcName(String cName) {
-        this.cName = cName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

@@ -1,12 +1,16 @@
-package com.credorax.processing.ui.model.request;
+package com.credorax.processing.ui.model.response;
 
-public class TransactionsRequestModel {
+// TODO: create TransactionsDecryptedRest if need it
+public class TransactionInsertResp {
 
     private int invoice;
     private int amount;
     private String currency;
-    CardholderRequestModel cardholder;
-    CardRequestModel card;
+    boolean approved;
+
+    // Just for
+    // TODO: remove after testing:
+
 
 
     public int getInvoice() {
@@ -33,20 +37,15 @@ public class TransactionsRequestModel {
         this.currency = currency;
     }
 
-    public CardholderRequestModel getCardholder() {
-        return cardholder;
+    public boolean isApproved() {
+        return approved;
     }
 
-    public void setCardholder(CardholderRequestModel cardholder) {
-        this.cardholder = cardholder;
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 
-    public CardRequestModel getCard() {
-        return card;
-    }
 
-    public void setCard(CardRequestModel card) {
-        this.card = card;
-    }
+
 
 }
