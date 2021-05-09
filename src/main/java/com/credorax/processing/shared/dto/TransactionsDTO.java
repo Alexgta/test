@@ -1,5 +1,7 @@
 package com.credorax.processing.shared.dto;
 
+import com.credorax.processing.shared.TrunsactionsReqErrors;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.io.Serializable;
@@ -25,7 +27,53 @@ public class TransactionsDTO implements Serializable {
     private String expiryEncr;
 
     private boolean approved = true;
-    // private TrunsactionsReqErrors errors;
+    private TrunsactionsReqErrors errors;
+
+
+    public TransactionsDTO() {
+        this.errors = new TrunsactionsReqErrors();
+    }
+
+    public boolean validate() {
+
+        if (this.invoice <= 0)
+            errors.setInvoice("Invoice is required.");
+
+        if (this.amount <= 0)
+            errors.setAmount("Amount is required.");
+            // TODO add check ammount method
+        else if (this.amount == -1)
+            errors.setAmount("Amount should be positive number.");
+
+        if (this.currency == null || this.currency.equals(""))
+            errors.setCurrency("Currency is required.");
+
+        if (this.name == null || this.name.equals(""))
+            errors.setName("Name is required.");
+
+        if (this.email == null || this.email.equals(""))
+            errors.setEmail("Email is required.");
+
+        if (this.pan == null || this.pan.equals(""))
+            errors.setPan("PAN is required.");
+
+        if (this.expiry == null || this.expiry.equals(""))
+            errors.setExpiry("Expire date is required.");
+
+        if (this.cvv == null || this.cvv.equals(""))
+            errors.setCvv("CVV is required.");
+
+        this.approved = errors.getInvoice() == null
+                && errors.getAmount() == null
+                && errors.getCurrency() == null
+                && errors.getName() == null
+                && errors.getEmail() == null
+                && errors.getPan() == null
+                && errors.getExpiry() == null
+                && errors.getCvv() == null;
+        return this.approved;
+    }
+
 
     public int getId() {
         return id;
@@ -40,7 +88,10 @@ public class TransactionsDTO implements Serializable {
     }
 
     public String getName() {
-        return new String(Base64.decodeBase64(nameEncr));
+        if (this.nameEncr != null)
+            return new String(Base64.decodeBase64(nameEncr));
+        else
+            return null;
     }
 
     public void setName(String name) {
@@ -56,11 +107,17 @@ public class TransactionsDTO implements Serializable {
     }
 
     public String getPan() {
-        return new String(Base64.decodeBase64(panEncr));
+        if (this.panEncr != null)
+            return new String(Base64.decodeBase64(this.panEncr));
+        else
+            return null;
     }
 
     public String getExpiry() {
-        return new String(Base64.decodeBase64(expiryEncr));
+        if (this.expiryEncr != null) {
+            return new String(Base64.decodeBase64(this.expiryEncr));
+        } else
+            return null;
     }
 
     public void setExpiry(String expiry) {
@@ -106,12 +163,6 @@ public class TransactionsDTO implements Serializable {
 
     public void setInvoice(int invoice) {
         this.invoice = invoice;
-
-        byte[] encodedBytes = Base64.encodeBase64("Test".getBytes());
-        System.out.println("encodedBytes: " + new String(Base64.encodeBase64("Test".getBytes())));
-        byte[] decodedBytes = Base64.decodeBase64(encodedBytes);
-        System.out.println("decodedBytes " + new String(Base64.decodeBase64(encodedBytes)));
-
     }
 
     public int getAmount() {
@@ -146,4 +197,11 @@ public class TransactionsDTO implements Serializable {
         this.approved = approved;
     }
 
+    public TrunsactionsReqErrors getErrors() {
+        return errors;
+    }
+
+    public void setErrors(TrunsactionsReqErrors errors) {
+        this.errors = errors;
+    }
 }

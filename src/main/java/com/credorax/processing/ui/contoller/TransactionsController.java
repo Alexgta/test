@@ -31,10 +31,15 @@ public class TransactionsController {
 
         ModelMapper modelMapper = new ModelMapper();
         TransactionsDTO transactionsDto = modelMapper.map(transactionsDetails, TransactionsDTO.class);
-        TransactionsDTO newTransaction = transactionsService.createTransactions(transactionsDto);
-        TransactionInsertResp returnValue = modelMapper.map(newTransaction, TransactionInsertResp.class);
+        TransactionInsertResp returnValue;
+        if (transactionsDto.validate()) {
+            TransactionsDTO newTransaction = transactionsService.createTransactions(transactionsDto);
+            returnValue = modelMapper.map(newTransaction, TransactionInsertResp.class);
+        } else {
+            returnValue = modelMapper.map(transactionsDto, TransactionInsertResp.class);
+        }
+
         return returnValue;
-        //return modelMapper.map(transactionsDto, TransactionInsertResp.class);
     }
 
     @PutMapping

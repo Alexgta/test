@@ -1,32 +1,30 @@
 package com.credorax.processing.shared;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class TrunsactionsReqErrors {
 
     // invoce:
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String invoice;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String amount;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String currency;
 
     // cardholder:
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String name;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String email;
 
     // card
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String pan;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String expiry;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cvv;
-
-    // TODO: dublicate. Delete this method later, if don't need it.
-    public Boolean getStatus() {
-        return this.invoice == null
-                && this.amount == null
-                && this.name == null
-                && this.email == null
-                && this.pan == null
-                && this.expiry == null
-                && this.cvv == null
-                && this.currency == null;
-    }
 
     public String getName() {
         return name;
@@ -91,4 +89,5 @@ public class TrunsactionsReqErrors {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
 }

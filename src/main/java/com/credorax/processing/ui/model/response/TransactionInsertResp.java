@@ -1,16 +1,25 @@
 package com.credorax.processing.ui.model.response;
 
+import com.credorax.processing.shared.TrunsactionsReqErrors;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 // TODO: create TransactionsDecryptedRest if need it
 public class TransactionInsertResp {
 
-    private int invoice;
-    private int amount;
-    private String currency;
-    boolean approved;
+    private boolean approved;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private TrunsactionsReqErrors errors;
+
+    public TransactionInsertResp() {
+        errors = new TrunsactionsReqErrors();
+    }
 
     // Just for testing
     // TODO: remove after testing:
     private int id;
+    private int invoice;
+    private int amount;
+    private String currency;
     private String name;
     private String nameEncr;
     private String email;
@@ -116,5 +125,15 @@ public class TransactionInsertResp {
         this.nameEncr = nameEncr;
     }
 
+    public TrunsactionsReqErrors getErrors() {
+        if (this.approved)
+            return null;
+        else
+            return errors;
+    }
+
+    public void setErrors(TrunsactionsReqErrors errors) {
+        this.errors = errors;
+    }
 
 }
