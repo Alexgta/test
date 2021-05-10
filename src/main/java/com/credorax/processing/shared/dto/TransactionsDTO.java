@@ -1,5 +1,6 @@
 package com.credorax.processing.shared.dto;
 
+import com.credorax.processing.shared.CredUtil;
 import com.credorax.processing.shared.TrunsactionsReqErrors;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -39,26 +40,38 @@ public class TransactionsDTO implements Serializable {
         if (this.invoice <= 0)
             errors.setInvoice("Invoice is required.");
 
-        if (this.amount <= 0)
+        if (this.amount == 0)
             errors.setAmount("Amount is required.");
             // TODO add check ammount method
-        else if (this.amount == -1)
+        else if (this.amount < 0)
             errors.setAmount("Amount should be positive number.");
+
 
         if (this.currency == null || this.currency.equals(""))
             errors.setCurrency("Currency is required.");
 
+
         if (this.name == null || this.name.equals(""))
             errors.setName("Name is required.");
 
+
         if (this.email == null || this.email.equals(""))
             errors.setEmail("Email is required.");
+        else if (!CredUtil.emailIsInValidFormat(this.email))
+            errors.setEmail("Email should have a valid format.");
+
 
         if (this.pan == null || this.pan.equals(""))
             errors.setPan("PAN is required.");
+        else if (!CredUtil.panIsValid(this.pan))
+            errors.setPan("PAN should be 16 digits long and pass a Luhn check.");
+
 
         if (this.expiry == null || this.expiry.equals(""))
             errors.setExpiry("Expire date is required.");
+        else if (!CredUtil.expDateIsValid(this.expiry))
+            errors.setExpiry("Expiry date should be valid and not in the past.");
+
 
         if (this.cvv == null || this.cvv.equals(""))
             errors.setCvv("CVV is required.");
