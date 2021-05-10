@@ -2,7 +2,6 @@ package com.credorax.processing.shared.dto;
 
 import com.credorax.processing.shared.CredUtil;
 import com.credorax.processing.shared.TrunsactionsReqErrors;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.io.Serializable;
@@ -42,7 +41,6 @@ public class TransactionsDTO implements Serializable {
 
         if (this.amount == 0)
             errors.setAmount("Amount is required.");
-            // TODO add check ammount method
         else if (this.amount < 0)
             errors.setAmount("Amount should be positive number.");
 
@@ -101,8 +99,10 @@ public class TransactionsDTO implements Serializable {
     }
 
     public String getName() {
-        if (this.nameEncr != null)
+        if (this.nameEncr != null && !this.nameEncr.equals(""))
             return new String(Base64.decodeBase64(nameEncr));
+        else if (this.name != null)
+            return this.name;
         else
             return null;
     }
@@ -120,16 +120,20 @@ public class TransactionsDTO implements Serializable {
     }
 
     public String getPan() {
-        if (this.panEncr != null)
+        if (this.panEncr != null && !this.panEncr.equals(""))
             return new String(Base64.decodeBase64(this.panEncr));
+        else if (this.pan != null)
+            return this.pan;
         else
             return null;
     }
 
     public String getExpiry() {
-        if (this.expiryEncr != null) {
+        if (this.expiryEncr != null && !this.expiryEncr.equals(""))
             return new String(Base64.decodeBase64(this.expiryEncr));
-        } else
+        else if (this.expiry != null)
+            return this.expiry;
+        else
             return null;
     }
 

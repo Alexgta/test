@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class TransactionsServiceImpl implements TransactionsService {
 
@@ -20,10 +21,10 @@ public class TransactionsServiceImpl implements TransactionsService {
 
         ModelMapper modelMapper = new ModelMapper();
         TransactionsEntity transactionsEntity = modelMapper.map(transaction, TransactionsEntity.class);
-        // TODO:
         TransactionsDTO returnValue = transaction;
         TransactionsEntity savedTransactionsEntity = transactionsRepository.save(transactionsEntity);
         returnValue = modelMapper.map(savedTransactionsEntity, TransactionsDTO.class);
+
         return returnValue;
     }
 

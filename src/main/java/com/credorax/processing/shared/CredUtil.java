@@ -1,7 +1,9 @@
 package com.credorax.processing.shared;
 
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 
 public class CredUtil {
@@ -124,10 +126,30 @@ public class CredUtil {
         return digit.substring(digit.length() - 1);
     }
 
+   /**
+    *   write an audit message into the file
+    **/
+
+    public static void saveAuditMessage(String jsonString) {
+        try {
+            String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+            String appConfigPath = rootPath + "application.properties";
+            Properties appProps = new Properties();
+            appProps.load(new FileInputStream(appConfigPath));
+            String auditFilePath = appProps.getProperty("credorax.path.auditFile");
+
+            System.out.println(auditFilePath);
+
+            BufferedWriter out = new BufferedWriter (new FileWriter(auditFilePath, true));
+            out.write(jsonString + "\n");
+            out.close();
 
 
-
-
+        }
+        catch (IOException e) {
+            System.out.println("exception occoured" + e);
+        }
+    }
 
 
 }

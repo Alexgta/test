@@ -2,12 +2,15 @@ package com.credorax.processing.ui.contoller;
 
 
 import com.credorax.processing.service.TransactionsService;
+import com.credorax.processing.shared.CredUtil;
 import com.credorax.processing.shared.dto.TransactionsDTO;
 import com.credorax.processing.ui.model.request.TransactionsRequest;
 import com.credorax.processing.ui.model.response.TransactionInsertResp;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/transc") // http://localhost:8080/transc
@@ -35,8 +38,19 @@ public class TransactionsController {
         if (transactionsDto.validate()) {
             TransactionsDTO newTransaction = transactionsService.createTransactions(transactionsDto);
             returnValue = modelMapper.map(newTransaction, TransactionInsertResp.class);
-        } else {
+        } else
             returnValue = modelMapper.map(transactionsDto, TransactionInsertResp.class);
+
+
+        // Save to file for audite.
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            // Java in JSON String
+            String jsonString = mapper.writeValueAsString(returnValue);
+            CredUtil.saveAuditMessage(jsonString);
+        }
+        catch (IOException e) {
+            System.out.println("exception occoured"+ e);
         }
 
         return returnValue;

@@ -3,8 +3,16 @@ package com.credorax.processing.ui.model.response;
 import com.credorax.processing.shared.TrunsactionsReqErrors;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-// TODO: create TransactionsDecryptedRest if need it
+
 public class TransactionInsertResp {
+
+    private int invoice;
+    private int amount;
+    private String currency;
+    private String name;
+    private String email;
+    private String pan;
+    private String expiry;
 
     private boolean approved;
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -13,21 +21,6 @@ public class TransactionInsertResp {
     public TransactionInsertResp() {
         errors = new TrunsactionsReqErrors();
     }
-
-    // Just for testing
-    // TODO: remove after testing:
-    private int id;
-    private int invoice;
-    private int amount;
-    private String currency;
-    private String name;
-    private String nameEncr;
-    private String email;
-    private String pan;
-    private String panEncr;
-    private String expiry;
-    private String expiryEncr;
-
 
     public int getInvoice() {
         return invoice;
@@ -61,16 +54,8 @@ public class TransactionInsertResp {
         this.approved = approved;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
-        return name;
+        return this.name ;// .replaceAll(".", "*");
     }
 
     public void setName(String name) {
@@ -86,7 +71,7 @@ public class TransactionInsertResp {
     }
 
     public String getPan() {
-        return pan;
+        return "************" + pan.substring(pan.length() - 4);
     }
 
     public void setPan(String pan) {
@@ -94,35 +79,11 @@ public class TransactionInsertResp {
     }
 
     public String getExpiry() {
-        return expiry;
+        return "****";
     }
 
     public void setExpiry(String expiry) {
         this.expiry = expiry;
-    }
-
-    public String getPanEncr() {
-        return panEncr;
-    }
-
-    public void setPanEncr(String panEncr) {
-        this.panEncr = panEncr;
-    }
-
-    public String getExpiryEncr() {
-        return expiryEncr;
-    }
-
-    public void setExpiryEncr(String expiryEncr) {
-        this.expiryEncr = expiryEncr;
-    }
-
-    public String getNameEncr() {
-        return nameEncr;
-    }
-
-    public void setNameEncr(String nameEncr) {
-        this.nameEncr = nameEncr;
     }
 
     public TrunsactionsReqErrors getErrors() {
