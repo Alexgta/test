@@ -1,2 +1,3 @@
 # test
-test Web service
+test Web service.
+Simple service for processing and saving transactions 
